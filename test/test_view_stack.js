@@ -63,17 +63,17 @@ describe('ViewStack', function() {
         beforeEach(function() {
             foo = new Backbone.TextView({ text: 'foo' });
             bar = new Backbone.TextView({ text: 'bar' });
-
-            viewStack.pushView(foo.render());
         });
 
         it('shows replaced view', function() {
+            viewStack.pushView(foo.render());
             viewStack.replaceView(bar.render());
 
             assert.equal(viewStack.$el.html(), '<div>bar</div>');
         });
 
         it('removes previous view from stack', function() {
+            viewStack.pushView(foo.render());
             viewStack.replaceView(bar.render());
             viewStack.popView();
 
@@ -81,8 +81,15 @@ describe('ViewStack', function() {
         });
 
         it('removes view stack from view', function() {
+            viewStack.pushView(foo.render());
             var view = viewStack.replaceView(bar.render());
             assert.ok(!view.viewStack);
+        });
+
+        it('throws error if stack is empty', function() {
+            assert.throws(function() {
+                viewStack.replaceView(bar.render());
+            });
         });
     });
 });
