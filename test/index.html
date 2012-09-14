@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="vendor/mocha.css">
+    </head>
+    <body>
+        <div id="mocha"></div>
+
+        <script src="vendor/jquery.js"></script>
+        <script src="vendor/underscore.js"></script>
+        <script src="vendor/backbone.js"></script>
+        <script src="vendor/mocha.js"></script>
+        <script src="vendor/chai.js"></script>
+
+        <script src="../backbone.viewkit.js"></script>
+
+        <script>
+            mocha.setup('bdd');
+        </script>
+
+    <script src="helpers/text_view.js"></script>        
+        <script src="test_view_stack.js"></script>
+
+        <script>
+            mocha.run();
+        </script>
+    </body>
+</html>
