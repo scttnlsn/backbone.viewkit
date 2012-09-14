@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../test/vendor/jquery.js"></script>
+        <script src="../test/vendor/underscore.js"></script>
+        <script src="../test/vendor/backbone.js"></script>
+        <script src="../backbone.viewkit.js"></script>
+        <script src="example.js"></script>
+    </head>
+    <body>
+        <div id="tabs"></div>
+        <div id="content"></div>
+
+        <!-- Templates -->
+
+        <script id="tabs-template" type="text/template">
+            <ul>
+                <li><button data-tab="0">Foo/Bar/Baz</button></li>
+                <li><button data-tab="1">Qux</button></li>
+            </ul>
+        </script>
+
+        <script id="foo-template" type="text/template">
+            <h1>Foo</h1>
+
+            <button class="push">Push Bar</button>
+        </script>
+
+        <script id="bar-template" type="text/template">
+            <h1>Bar</h1>
+
+            <button class="pop">Pop</button>
+            <button class="push">Push Baz</button>
+        </script>
+
+        <script id="baz-template" type="text/template">
+            <h1>Baz</h1>
+
+            <button class="pop">Pop</button>
+        </script>
+
+        <script id="qux-template" type="text/template">
+            <h1>Qux</h1>
+        </script>
+    </body>
+</html>
