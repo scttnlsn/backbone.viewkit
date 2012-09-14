@@ -2,26 +2,30 @@
 
     Backbone.ViewPort = Backbone.View.extend({
 
-        constructor: function() {
-            Backbone.View.prototype.constructor.apply(this, arguments);
-
-            this._originalEl = this.$el;
-        },
-
         activeView: function() {
             return null;
         },
 
         render: function() {
+            this.$el.empty();
+
             var view = this.activeView();
 
             if (view) {
-                this.setElement(view.$el);
-            } else {
-                this.setElement(this._originalEl);
+                this.$el.html(view.$el);
+                view.delegateEvents();
             }
 
             return this;
+        },
+
+        delegateEvents: function() {
+            Backbone.View.prototype.delegateEvents.apply(this, arguments);
+
+            var view = this.activeView();
+            if (view) {
+                view.delegateEvents();
+            }
         }
 
     });
@@ -29,9 +33,9 @@
     Backbone.ViewStack = Backbone.ViewPort.extend({
 
         constructor: function() {
-            Backbone.ViewPort.prototype.constructor.apply(this, arguments);
-
             this._stack = [];
+
+            Backbone.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         activeView: function() {
@@ -40,30 +44,37 @@
 
         pushView: function(view) {
             view.viewStack = this;
+
             this._stack.push(view);
             this.render();
         },
 
         popView: function() {
-            var view = this._stack.pop();
-
-            if (view) {
-                this.closeView(view);
-            }
-
-            this.render();
-            return view;
-        },
-
-        replaceView: function(view) {
             var popped = this._stack.pop();
 
             if (popped) {
                 this.closeView(popped);
             }
 
-            this.pushView(view);
+            this.render();
+
             return popped;
+        },
+
+        replaceView: function(view) {
+            if (this._stack.length === 0) {
+                throw new Error('View stack is empty');
+            }
+
+            var replaced = this._stack.pop();
+
+            if (replaced) {
+                this.closeView(replaced);
+            }
+
+            this.pushView(view);
+
+            return replaced;
         },
 
         closeView: function(view) {
@@ -75,10 +86,10 @@
     Backbone.ViewSelector = Backbone.ViewPort.extend({
 
         constructor: function() {
-            Backbone.ViewPort.prototype.constructor.apply(this, arguments);
-
             this._views = [];
             this._index = null;
+
+            Backbone.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         activeView: function() {
@@ -88,11 +99,9 @@
         setViews: function(views) {
             var self = this;
 
-            if (this._views) {
-                _.each(this._views, function(view) {
-                    self.closeView(view);
-                });
-            }
+            _.each(this._views, function(view) {
+                self.closeView(view);
+            });
 
             _.each(views, function(view) {
                 view.viewSelector = self;

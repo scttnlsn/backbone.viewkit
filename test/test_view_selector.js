@@ -40,10 +40,10 @@ describe('ViewSelector', function() {
 
         it('shows selected view', function() {
             viewSelector.selectView(0);
-            assert.equal(viewSelector.$el.html(), 'foo');
+            assert.equal(viewSelector.$el.html(), '<div>foo</div>');
 
             viewSelector.selectView(1);
-            assert.equal(viewSelector.$el.html(), 'bar');
+            assert.equal(viewSelector.$el.html(), '<div>bar</div>');
         });
 
         it('adds view selector to view', function() {

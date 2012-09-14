@@ -17,11 +17,9 @@ describe('ViewPort', function() {
         foo.render();
 
         viewport.activeView = function() {
-            if (!empty) return foo;
+            return foo;
         };
 
-        assert.equal(viewport.render().$el.html(), '');
-        empty = false;
-        assert.equal(viewport.render().$el.html(), 'foo');
+        assert.equal(viewport.render().$el.html(), '<div>foo</div>');
     });
 });

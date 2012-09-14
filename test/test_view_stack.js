@@ -16,7 +16,7 @@ describe('ViewStack', function() {
         });
 
         it('shows pushed view', function() {
-            assert.equal(viewStack.$el.html(), 'foo');
+            assert.equal(viewStack.$el.html(), '<div>foo</div>');
         });
 
         it('adds view stack to view', function() {
@@ -36,11 +36,11 @@ describe('ViewStack', function() {
         });
 
         it('shows previous view', function() {
-            assert.equal(viewStack.$el.html(), 'bar');
+            assert.equal(viewStack.$el.html(), '<div>bar</div>');
 
             viewStack.popView();
 
-            assert.equal(viewStack.$el.html(), 'foo');
+            assert.equal(viewStack.$el.html(), '<div>foo</div>');
         });
 
         it('shows nothing when all views are popped', function() {
@@ -70,7 +70,7 @@ describe('ViewStack', function() {
         it('shows replaced view', function() {
             viewStack.replaceView(bar.render());
 
-            assert.equal(viewStack.$el.html(), 'bar');
+            assert.equal(viewStack.$el.html(), '<div>bar</div>');
         });
 
         it('removes previous view from stack', function() {
