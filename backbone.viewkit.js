@@ -1,12 +1,37 @@
 (function() {
 
-    Backbone.ViewStack = Backbone.View.extend({
+    Backbone.ViewPort = Backbone.View.extend({
 
         constructor: function() {
             Backbone.View.prototype.constructor.apply(this, arguments);
 
+            this._originalEl = this.$el;
+        },
+
+        activeView: function() {
+            return null;
+        },
+
+        render: function() {
+            var view = this.activeView();
+
+            if (view) {
+                this.setElement(view.$el);
+            } else {
+                this.setElement(this._originalEl);
+            }
+
+            return this;
+        }
+
+    });
+
+    Backbone.ViewStack = Backbone.ViewPort.extend({
+
+        constructor: function() {
+            Backbone.ViewPort.prototype.constructor.apply(this, arguments);
+
             this._stack = [];
-            this._defaultEl = this.$el;
         },
 
         activeView: function() {
@@ -32,22 +57,36 @@
 
         closeView: function(view) {
 
-        },
-
-        render: function() {
-            var view = this.activeView();
-
-            if (view) {
-                this.setElement(view.$el);
-            } else {
-                this.setElement(this._defaultEl);
-            }
-
-            return this;
         }
 
     });
 
-    Backbone.ViewSelector = null;
+    Backbone.ViewSelector = Backbone.ViewPort.extend({
+
+        constructor: function() {
+            Backbone.ViewPort.prototype.constructor.apply(this, arguments);
+
+            this._views = [];
+            this._index = null;
+        },
+
+        activeView: function() {
+            return this._views[this._index];
+        },
+
+        setViews: function(views) {
+            this._views = views;
+        },
+
+        selectView: function(index) {
+            if (index >= this._views.length || index < 0) {
+                throw new Error('Index out of bounds');
+            }
+
+            this._index = index;
+            this.render();
+        }
+
+    });
 
 })();

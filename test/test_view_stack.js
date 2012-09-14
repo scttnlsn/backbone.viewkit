@@ -7,10 +7,6 @@ describe('ViewStack', function() {
         viewStack = new Backbone.ViewStack();
     });
 
-    it('shows nothing by default', function() {
-        assert.equal(viewStack.render().$el.html(), '');
-    });
-
     describe('when pushing view', function() {
         var foo;
 
