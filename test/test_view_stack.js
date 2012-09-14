@@ -50,6 +50,11 @@ describe('ViewStack', function() {
 
             assert.equal(viewStack.$el.html(), '');
         });
+
+        it('removes view stack from view', function() {
+            var view = viewStack.popView();
+            assert.ok(!view.viewStack);
+        });
     });
 
     describe('when replacing a view', function() {
@@ -73,6 +78,11 @@ describe('ViewStack', function() {
             viewStack.popView();
 
             assert.equal(viewStack.$el.html(), '');
+        });
+
+        it('removes view stack from view', function() {
+            var view = viewStack.replaceView(bar.render());
+            assert.ok(!view.viewStack);
         });
     });
 });

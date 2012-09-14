@@ -46,17 +46,28 @@
 
         popView: function() {
             var view = this._stack.pop();
-            this.closeView(view);
+
+            if (view) {
+                this.closeView(view);
+            }
+
             this.render();
+            return view;
         },
 
         replaceView: function(view) {
-            this._stack.pop();
+            var popped = this._stack.pop();
+
+            if (popped) {
+                this.closeView(popped);
+            }
+
             this.pushView(view);
+            return popped;
         },
 
         closeView: function(view) {
-
+            delete view.viewStack;
         }
 
     });
@@ -75,6 +86,18 @@
         },
 
         setViews: function(views) {
+            var self = this;
+
+            if (this._views) {
+                _.each(this._views, function(view) {
+                    self.closeView(view);
+                });
+            }
+
+            _.each(views, function(view) {
+                view.viewSelector = self;
+            });
+
             this._views = views;
         },
 
@@ -85,6 +108,10 @@
 
             this._index = index;
             this.render();
+        },
+
+        closeView: function(view) {
+            delete view.viewSelector;
         }
 
     });
