@@ -33,13 +33,13 @@
     Backbone.ViewStack = Backbone.ViewPort.extend({
 
         constructor: function() {
-            this._stack = [];
+            this._stack = stack();
 
             Backbone.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         activeView: function() {
-            return this._stack[this._stack.length - 1];
+            return this._stack.top();
         },
 
         pushView: function(view) {
@@ -62,7 +62,7 @@
         },
 
         replaceView: function(view) {
-            if (this._stack.length === 0) {
+            if (this._stack.empty()) {
                 throw new Error('View stack is empty');
             }
 
@@ -124,5 +124,30 @@
         }
 
     });
+
+    // Helpers
+    // ---------------
+
+    function stack() {
+        return {
+            items: [],
+
+            push: function(item) {
+                this.items.push(item);
+            },
+
+            pop: function() {
+                return this.items.pop();
+            },
+
+            top: function() {
+                return this.items[this.items.length - 1];
+            },
+
+            empty: function() {
+                return this.items.length === 0;
+            }
+        };
+    }
 
 })();
