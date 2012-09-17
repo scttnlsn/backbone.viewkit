@@ -5,6 +5,8 @@
 
     var TemplateView = Backbone.View.extend({
 
+        className: 'page',
+
         initialize: function() {
             this.render();
         },
@@ -36,17 +38,16 @@
 
         template: '#foo-template',
 
+        className: 'page foo',
+
         events: {
             'click .push': 'push'
         },
 
         push: function() {
             var bar = new BarView();
-            viewStack.pushView(bar);
-        },
-
-        render: function() {
-            return TemplateView.prototype.render.call(this);
+            var slide = new Backbone.Transitions.Slide();
+            viewStack.pushView(bar, slide);
         }
 
     });
@@ -55,6 +56,8 @@
 
         template: '#bar-template',
 
+        className: 'page bar',
+
         events: {
             'click .push': 'push',
             'click .pop': 'pop'
@@ -62,11 +65,13 @@
 
         push: function() {
             var baz = new BazView();
-            this.viewStack.pushView(baz);
+            var slide = new Backbone.Transitions.Slide();
+            this.viewStack.pushView(baz, slide);
         },
 
         pop: function() {
-            this.viewStack.popView();
+            var slide = new Backbone.Transitions.Slide({ reverse: true });
+            this.viewStack.popView(slide);
         }
 
     });
@@ -75,12 +80,15 @@
 
         template: '#baz-template',
 
+        className: 'page baz',
+
         events: {
             'click .pop': 'pop'
         },
 
         pop: function() {
-            this.viewStack.popView();
+            var slide = new Backbone.Transitions.Slide({ reverse: true });
+            this.viewStack.popView(slide);
         }
 
     });
