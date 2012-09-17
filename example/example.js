@@ -1,11 +1,14 @@
 (function() {
 
     var viewSelector = new Backbone.ViewSelector();
-    var viewStack = new Backbone.ViewStack();
+    var viewStack = new Backbone.ViewStack({
+        transitions: {
+            push: new Backbone.Transitions.Slide(),
+            pop: new Backbone.Transitions.Slide({ reverse: true })
+        }
+    });
 
     var TemplateView = Backbone.View.extend({
-
-        className: 'page',
 
         initialize: function() {
             this.render();
@@ -46,8 +49,7 @@
 
         push: function() {
             var bar = new BarView();
-            var slide = new Backbone.Transitions.Slide();
-            viewStack.pushView(bar, slide);
+            viewStack.pushView(bar);
         }
 
     });
@@ -65,13 +67,11 @@
 
         push: function() {
             var baz = new BazView();
-            var slide = new Backbone.Transitions.Slide();
-            this.viewStack.pushView(baz, slide);
+            this.viewStack.pushView(baz);
         },
 
         pop: function() {
-            var slide = new Backbone.Transitions.Slide({ reverse: true });
-            this.viewStack.popView(slide);
+            this.viewStack.popView();
         }
 
     });
@@ -87,8 +87,7 @@
         },
 
         pop: function() {
-            var slide = new Backbone.Transitions.Slide({ reverse: true });
-            this.viewStack.popView(slide);
+            this.viewStack.popView();
         }
 
     });
