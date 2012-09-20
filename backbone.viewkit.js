@@ -50,7 +50,7 @@
             options || (options = {});
 
             this._stack = stack();
-            this.transitions = options.transitions
+            this.transitions = options.transitions || {};
 
             Backbone.ViewPort.prototype.constructor.apply(this, arguments);
         },
