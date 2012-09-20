@@ -16,7 +16,7 @@ describe('ViewPort', function() {
         var foo = new Backbone.TextView({ text: 'foo' });
         foo.render();
 
-        viewport.activeView = function() {
+        viewport.getView = function() {
             return foo;
         };
 

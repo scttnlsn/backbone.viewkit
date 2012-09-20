@@ -5,12 +5,12 @@
 
     Backbone.ViewPort = Backbone.View.extend({
 
-        activeView: function() {
+        getView: function() {
             return null;
         },
 
         render: function(transition) {
-            var view = this.activeView();
+            var view = this.getView();
             var current = this._current;
 
             if (view) {
@@ -36,7 +36,7 @@
         delegateEvents: function() {
             Backbone.View.prototype.delegateEvents.apply(this, arguments);
 
-            var view = this.activeView();
+            var view = this.getView();
             if (view) {
                 view.delegateEvents();
             }
@@ -55,7 +55,7 @@
             Backbone.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
-        activeView: function() {
+        getView: function() {
             return this._stack.top();
         },
 
@@ -109,7 +109,7 @@
             Backbone.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
-        activeView: function() {
+        getView: function() {
             return this._views[this._index];
         },
 
