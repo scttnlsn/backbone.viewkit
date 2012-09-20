@@ -13,8 +13,10 @@
             var view = this.getView();
             var current = this._current;
 
+            if (view === current) return this;
+
             if (view) {
-                if (current && transition && view !== current) {
+                if (current && transition) {
                     transition.run(this.$el, current.$el, view.$el, function() {
                         current.remove();
                     });
