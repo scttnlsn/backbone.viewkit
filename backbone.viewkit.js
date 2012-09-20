@@ -70,7 +70,7 @@
             var popped = this._stack.pop();
 
             if (popped) {
-                this.closeView(popped);
+                this._cleanup(popped);
             }
 
             this.render(transition || this.transitions.pop);
@@ -86,7 +86,7 @@
             var replaced = this._stack.pop();
 
             if (replaced) {
-                this.closeView(replaced);
+                this._cleanup(replaced);
             }
 
             this.pushView(view, transition || this.transitions.replace);
@@ -94,7 +94,7 @@
             return replaced;
         },
 
-        closeView: function(view) {
+        _cleanup: function(view) {
             delete view.viewStack;
         }
 
@@ -117,7 +117,7 @@
             var self = this;
 
             _.each(this._views, function(view) {
-                self.closeView(view);
+                self._cleanup(view);
             });
 
             _.each(views, function(view) {
@@ -136,7 +136,7 @@
             this.render();
         },
 
-        closeView: function(view) {
+        _cleanup: function(view) {
             delete view.viewSelector;
         }
 
