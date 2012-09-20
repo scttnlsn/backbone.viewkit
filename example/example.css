@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#tabs {
+    background: black;
+    bottom: 0;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 100%;
+}
+
+#tabs ul li {
+    display: inline-block;
+}
+
+#content {
+    bottom: 50px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    width: 100%;
+}
+
+#content .nav {
+    background: black;
+    color: white;
+    height: 44px;
+    left: 0;
+    line-height: 44px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+
+#content .nav a {
+    color: white;
+}
+
+#content .nav h1 {
+    margin: 0;
+    padding: 0;
+}
+
+#content .nav .left {
+    float: left;
+    margin-left: 20px;
+}
+
+#content .page {
+    bottom: 0px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    width: 100%;
+}
+
+#content .main {
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+    top: 44px;
+    width: 100%;
+}
+
+#content .main ul {
+    border-top: 1px solid #EFEFEF;
+    margin: 0;
+    padding: 0;
+}
+
+#content .main ul li {
+    border-bottom: 1px solid #EFEFEF;
+    list-style: none;
+    padding: 10px 20px;
+}

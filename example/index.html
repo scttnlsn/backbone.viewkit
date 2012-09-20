@@ -1,49 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <link rel="stylesheet" href="example.css">
         
         <script src="../test/vendor/jquery.js"></script>
         <script src="../test/vendor/underscore.js"></script>
         <script src="../test/vendor/backbone.js"></script>
         <script src="../backbone.viewkit.js"></script>
         <script src="example.js"></script>
-
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-            }
-
-            #content {
-                clear: both;
-                position: absolute;
-                width: 100%;
-            }
-
-            #content .page {
-                left: 0;
-                position: absolute;
-                right: 0;
-                width: 100%;
-            }
-
-            .foo {
-                background-color: #D8D8D8;
-            }
-
-            .bar {
-                background-color: #BDBDBD;
-            }
-
-            .baz {
-                background-color: #A4A4A4;
-            }
-        </style>
     </head>
     <body>
-        <div id="tabs"></div>
         <div id="content"></div>
+        <div id="tabs"></div>
 
         <!-- Templates -->
 
@@ -55,26 +25,57 @@
         </script>
 
         <script id="foo-template" type="text/template">
-            <h1>Foo</h1>
+            <div class="nav">
+                <h1>Foo</h1>
+            </div>
 
-            <button class="push">Push Bar</button>
+            <div class="main">
+                <div class="scrollable vertical">
+                    This is view Foo.
+                    <br>
+                    <button class="push">View Bar</button>
+                </div>
+            </div>
         </script>
 
         <script id="bar-template" type="text/template">
-            <h1>Bar</h1>
+            <div class="nav">
+                <div class="left">
+                    <a href="#" class="pop">Back</a>
+                </div>
 
-            <button class="pop">Pop</button>
-            <button class="push">Push Baz</button>
+                <h1>Bar</h1>
+            </div>
+
+            <div class="main">
+                This is view Bar.
+                <br>
+                <button class="push">View Baz</button>
+            </div>
         </script>
 
         <script id="baz-template" type="text/template">
-            <h1>Baz</h1>
+            <div class="nav">
+                <div class="left">
+                    <a href="#" class="pop">Back</a>
+                </div>
 
-            <button class="pop">Pop</button>
+                <h1>Baz</h1>
+            </div>
+
+            <div class="main">
+                This is view Baz.
+            </div>
         </script>
 
         <script id="qux-template" type="text/template">
-            <h1>Qux</h1>
+            <div class="nav">
+                <h1>Qux</h1>
+            </div>
+
+            <div class="main">
+                This is view Qux.
+            </div>
         </script>
     </body>
 </html>

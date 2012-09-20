@@ -41,7 +41,7 @@
 
         template: '#foo-template',
 
-        className: 'page foo',
+        className: 'page',
 
         events: {
             'click .push': 'push'
@@ -58,7 +58,7 @@
 
         template: '#bar-template',
 
-        className: 'page bar',
+        className: 'page',
 
         events: {
             'click .push': 'push',
@@ -80,7 +80,7 @@
 
         template: '#baz-template',
 
-        className: 'page baz',
+        className: 'page',
 
         events: {
             'click .pop': 'pop'
