@@ -148,6 +148,15 @@
     // ---------------
 
     Backbone.Transition = function(params) {
+        this.props = {
+            transition: '-webkit-transition',
+            transform: '-webkit-transform'
+        };
+
+        this.events = {
+            transition: 'webkitTransitionEnd'
+        };
+
         _.extend(this, params);
         _.extend(this, Backbone.Events);
     };
@@ -172,17 +181,17 @@
             var width = container.width();
 
             var transition = [
-                '-webkit-transform',
+                this.props.transform,
                 this.transform.duration + 's',
                 this.transform.easing,
                 this.transform.delay + 's'
             ].join(' ');
 
             from.css('left', 0);
-            from.css('-webkit-transition', transition);
+            from.css(this.props.transition, transition);
 
             to.css('left', this.reverse ? -width : width);
-            to.css('-webkit-transition', transition);
+            to.css(this.props.transition, transition);
             container.append(to);
 
             // Reflow
@@ -190,10 +199,10 @@
 
             var delta = this.reverse ? width : -width;
             var views = from.add(to);
-            views.css('-webkit-transform', 'translateX(' + delta + 'px)');
+            views.css(this.props.transform, 'translateX(' + delta + 'px)');
 
-            from.one('webkitTransitionEnd', transitionEnd);
-            to.one('webkitTransitionEnd', transitionEnd);
+            from.one(this.events.transition, transitionEnd);
+            to.one(this.events.transition, transitionEnd);
 
             var count = 0;
             var self = this;
@@ -203,13 +212,13 @@
 
                 callback();
 
-                to.css('-webkit-transition', '');
+                to.css(self.props.transition, '');
                 to.css('left', '');
-                to.css('-webkit-transform', '');
+                to.css(self.props.transform, '');
 
-                from.css('-webkit-transition', '');
+                from.css(self.props.transition, '');
                 from.css('left', '');
-                from.css('-webkit-transform', '');
+                from.css(self.props.transform, '');
 
                 self.trigger('end');
             }
