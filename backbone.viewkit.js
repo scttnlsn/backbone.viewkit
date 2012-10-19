@@ -1,9 +1,11 @@
 (function() {
 
+    var ViewKit = Backbone.ViewKit = {};
+
     // Views
     // ---------------
 
-    Backbone.ViewPort = Backbone.View.extend({
+    ViewKit.ViewPort = Backbone.View.extend({
 
         getView: function() {
             return null;
@@ -46,7 +48,7 @@
 
     });
 
-    Backbone.ViewStack = Backbone.ViewPort.extend({
+    ViewKit.ViewStack = ViewKit.ViewPort.extend({
 
         constructor: function(options) {
             options || (options = {});
@@ -54,7 +56,7 @@
             this._stack = stack();
             this.transitions = options.transitions || {};
 
-            Backbone.ViewPort.prototype.constructor.apply(this, arguments);
+            ViewKit.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         getView: function() {
@@ -102,13 +104,13 @@
 
     });
 
-    Backbone.ViewSelector = Backbone.ViewPort.extend({
+    ViewKit.ViewSelector = ViewKit.ViewPort.extend({
 
         constructor: function() {
             this._views = [];
             this._index = null;
 
-            Backbone.ViewPort.prototype.constructor.apply(this, arguments);
+            ViewKit.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         getView: function() {
@@ -147,7 +149,7 @@
     // Transitions
     // ---------------
 
-    Backbone.Transition = function(params) {
+    ViewKit.Transition = function(params) {
         this.props = {
             transition: '-webkit-transition',
             transform: '-webkit-transform'
@@ -161,13 +163,13 @@
         _.extend(this, Backbone.Events);
     };
 
-    Backbone.Transition.extend = Backbone.View.extend;
+    ViewKit.Transition.extend = Backbone.View.extend;
 
-    Backbone.Transitions = {};
+    ViewKit.Transitions = {};
 
     // Slide
 
-    Backbone.Transitions.Slide = Backbone.Transition.extend({
+    ViewKit.Transitions.Slide = ViewKit.Transition.extend({
 
         transform: {
             duration: 0.4,

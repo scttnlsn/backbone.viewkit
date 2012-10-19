@@ -4,7 +4,7 @@ describe('ViewStack', function() {
     var viewStack;
 
     beforeEach(function() {
-        viewStack = new Backbone.ViewStack();
+        viewStack = new Backbone.ViewKit.ViewStack();
     });
 
     describe('when pushing view', function() {

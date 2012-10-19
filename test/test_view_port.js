@@ -4,7 +4,7 @@ describe('ViewPort', function() {
     var viewport;
 
     beforeEach(function() {
-        viewport = new Backbone.ViewPort();
+        viewport = new Backbone.ViewKit.ViewPort();
     });
 
     it('is initally empty', function() {

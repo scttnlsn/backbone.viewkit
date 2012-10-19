@@ -4,7 +4,7 @@ describe('ViewSelector', function() {
     var viewSelector, foo, bar;
 
     beforeEach(function() {
-        viewSelector = new Backbone.ViewSelector();
+        viewSelector = new Backbone.ViewKit.ViewSelector();
 
         foo = new Backbone.TextView({ text: 'foo' });
         bar = new Backbone.TextView({ text: 'bar' });
