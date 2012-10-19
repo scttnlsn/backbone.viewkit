@@ -1,10 +1,10 @@
 (function() {
 
-    var viewSelector = new Backbone.ViewSelector();
-    var viewStack = new Backbone.ViewStack({
+    var viewSelector = new Backbone.ViewKit.ViewSelector();
+    var viewStack = new Backbone.ViewKit.ViewStack({
         transitions: {
-            push: new Backbone.Transitions.Slide(),
-            pop: new Backbone.Transitions.Slide({ reverse: true })
+            push: new Backbone.ViewKit.Transitions.Slide(),
+            pop: new Backbone.ViewKit.Transitions.Slide({ reverse: true })
         }
     });
 
