@@ -174,7 +174,7 @@
 
     ViewKit.Transitions.Slide = ViewKit.Transition.extend({
 
-        transform: {
+        transition: {
             duration: 0.4,
             easing: 'ease-out',
             delay: 0
@@ -187,20 +187,23 @@
 
             var transition = [
                 this.props.transform,
-                this.transform.duration + 's',
-                this.transform.easing,
-                this.transform.delay + 's'
+                this.transition.duration + 's',
+                this.transition.easing,
+                this.transition.delay + 's'
             ].join(' ');
 
+            // Initial states
             from.css('left', 0);
-            from.css(this.props.transition, transition);
-
             to.css('left', this.reverse ? -width : width);
-            to.css(this.props.transition, transition);
 
             var delta = this.reverse ? width : -width;
             var views = from.add(to);
+
+            // Transform
+            views.css(this.props.transition, transition);
+            to.show();
             views.css(this.props.transform, 'translateX(' + delta + 'px)');
+
             views.on(this.events.transition, transitionEnd);
 
             var count = 0;
@@ -212,8 +215,60 @@
                 callback();
 
                 views.css(self.props.transition, '');
-                views.css('left', '');
                 views.css(self.props.transform, '');
+                views.css('left', '');
+
+                self.trigger('end');
+            }
+        }
+
+    });
+
+    // Fade
+
+    ViewKit.Transitions.Fade = ViewKit.Transition.extend({
+
+        transition: {
+            duration: 0.4,
+            easing: 'ease-out',
+            delay: 0
+        },
+
+        run: function(from, to, callback) {
+            this.trigger('start');
+
+            var transition = [
+                'opacity',
+                this.transition.duration + 's',
+                this.transition.easing,
+                this.transition.delay + 's'
+            ].join(' ');
+
+            // Initial states
+            to.css('opacity', 0);
+            from.css('opacity', 1);
+
+            var views = from.add(to);
+
+            // Transition
+            views.css(this.props.transition, transition);
+            to.show().css('opacity', 1);
+            from.css('opacity', 0);
+
+            views.on(this.events.transition, transitionEnd);
+
+            var count = 0;
+            var self = this;
+
+            function transitionEnd() {
+                if (++count !== 2) return;
+
+                callback();
+
+                views.css(self.props.transition, '');
+                views.css('opacity', '');
+                views.css('display', '');
+                views.off(self.events.transition, transitionEnd);
 
                 self.trigger('end');
             }
