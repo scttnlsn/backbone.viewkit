@@ -18,18 +18,21 @@
             if (view === current) return this;
 
             if (view) {
+                this.$el.append(view.$el);
+
                 if (current && transition) {
-                    transition.run(this.$el, current.$el, view.$el, function() {
+                    transition.run(current.$el, view.$el, function() {
                         current.remove();
                     });
                 } else {
-                    this.$el.html(view.$el);
+                    if (current) current.remove();
                 }
 
                 view.delegateEvents();
 
                 this._current = view;
             } else {
+                current.remove();
                 this._current = null;
                 this.$el.empty();
             }
@@ -177,10 +180,10 @@
             delay: 0
         },
 
-        run: function(container, from, to, callback) {
+        run: function(from, to, callback) {
             this.trigger('start');
 
-            var width = container.width();
+            var width = from.parent().width();
 
             var transition = [
                 this.props.transform,
@@ -194,17 +197,11 @@
 
             to.css('left', this.reverse ? -width : width);
             to.css(this.props.transition, transition);
-            container.append(to);
-
-            // Reflow
-            container.css('width');
 
             var delta = this.reverse ? width : -width;
             var views = from.add(to);
             views.css(this.props.transform, 'translateX(' + delta + 'px)');
-
-            from.one(this.events.transition, transitionEnd);
-            to.one(this.events.transition, transitionEnd);
+            views.on(this.events.transition, transitionEnd);
 
             var count = 0;
             var self = this;
@@ -214,13 +211,9 @@
 
                 callback();
 
-                to.css(self.props.transition, '');
-                to.css('left', '');
-                to.css(self.props.transform, '');
-
-                from.css(self.props.transition, '');
-                from.css('left', '');
-                from.css(self.props.transform, '');
+                views.css(self.props.transition, '');
+                views.css('left', '');
+                views.css(self.props.transform, '');
 
                 self.trigger('end');
             }
