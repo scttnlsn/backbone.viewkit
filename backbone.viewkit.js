@@ -15,8 +15,6 @@
             var view = this.getView();
             var current = this._current;
 
-            if (view === current) return this;
-
             if (view) {
                 this.$el.append(view.$el);
 
@@ -32,7 +30,7 @@
 
                 this._current = view;
             } else {
-                current.remove();
+                if (current) current.remove();
                 this._current = null;
                 this.$el.empty();
             }
@@ -152,19 +150,59 @@
     // Transitions
     // ---------------
 
-    ViewKit.Transition = function(params) {
-        this.props = {
-            transition: '-webkit-transition',
-            transform: '-webkit-transform'
-        };
-
-        this.events = {
-            transition: 'webkitTransitionEnd'
-        };
-
-        _.extend(this, params);
-        _.extend(this, Backbone.Events);
+    ViewKit.Transition = function(options) {
+        this.initialize(options || {});
     };
+
+    var Config = ViewKit.Transition.Config = {
+        transform: '-webkit-transform',
+        transition: '-webkit-transition',
+        transitionEnd: 'webkitTransitionEnd'
+    };
+
+    _.extend(ViewKit.Transition.prototype, Backbone.Events, {
+
+        // Override these
+        initialize: function(options) {},
+        before: function(from, to) {},
+        after: function(from, to) {},
+        cleanup: function(from, to) {},
+
+        run: function(from, to, callback) {
+            this.trigger('start');
+
+            this.before(from, to);
+
+            var els = from.add(to);
+            var transition = [
+                this.transition.property,
+                this.transition.duration + 's',
+                this.transition.easing,
+                this.transition.delay + 's'
+            ].join(' ');
+
+            // Transition
+            els.css(Config.transition, transition);
+            els.on(Config.transitionEnd, transitionEnd);
+            this.after(from, to);
+
+            var count = 0;
+            var self = this;
+
+            function transitionEnd() {
+                if (++count !== 2) return;
+
+                callback();
+
+                els.css(Config.transition, '');
+                els.off(Config.transitionEnd, transitionEnd);
+                self.cleanup(from, to);
+
+                self.trigger('end');
+            }
+        }
+
+    });
 
     ViewKit.Transition.extend = Backbone.View.extend;
 
@@ -175,51 +213,35 @@
     ViewKit.Transitions.Slide = ViewKit.Transition.extend({
 
         transition: {
+            property: Config.transform,
             duration: 0.4,
             easing: 'ease-out',
             delay: 0
         },
 
-        run: function(from, to, callback) {
-            this.trigger('start');
+        initialize: function(options) {
+            this.reverse = !!options.reverse;
+        },
 
+        before: function(from, to) {
             var width = from.parent().width();
-
-            var transition = [
-                this.props.transform,
-                this.transition.duration + 's',
-                this.transition.easing,
-                this.transition.delay + 's'
-            ].join(' ');
-
-            // Initial states
             from.css('left', 0);
             to.css('left', this.reverse ? -width : width);
+        },
 
+        after: function(from, to) {
+            var width = from.parent().width();
             var delta = this.reverse ? width : -width;
-            var views = from.add(to);
+            var els = from.add(to);
 
-            // Transform
-            views.css(this.props.transition, transition);
-            to.show();
-            views.css(this.props.transform, 'translateX(' + delta + 'px)');
+            els.css(Config.transform, 'translateX(' + delta + 'px)');
+        },
 
-            views.on(this.events.transition, transitionEnd);
+        cleanup: function(from, to) {
+            var els = from.add(to);
 
-            var count = 0;
-            var self = this;
-
-            function transitionEnd() {
-                if (++count !== 2) return;
-
-                callback();
-
-                views.css(self.props.transition, '');
-                views.css(self.props.transform, '');
-                views.css('left', '');
-
-                self.trigger('end');
-            }
+            els.css(Config.transform, '');
+            els.css('left', '');
         }
 
     });
@@ -229,49 +251,26 @@
     ViewKit.Transitions.Fade = ViewKit.Transition.extend({
 
         transition: {
+            property: 'opacity',
             duration: 0.4,
             easing: 'ease-out',
             delay: 0
         },
 
-        run: function(from, to, callback) {
-            this.trigger('start');
-
-            var transition = [
-                'opacity',
-                this.transition.duration + 's',
-                this.transition.easing,
-                this.transition.delay + 's'
-            ].join(' ');
-
-            // Initial states
+        before: function(from, to) {
             to.css('opacity', 0);
             from.css('opacity', 1);
+        },
 
-            var views = from.add(to);
-
-            // Transition
-            views.css(this.props.transition, transition);
+        after: function(from, to) {
             to.show().css('opacity', 1);
             from.css('opacity', 0);
+        },
 
-            views.on(this.events.transition, transitionEnd);
-
-            var count = 0;
-            var self = this;
-
-            function transitionEnd() {
-                if (++count !== 2) return;
-
-                callback();
-
-                views.css(self.props.transition, '');
-                views.css('opacity', '');
-                views.css('display', '');
-                views.off(self.events.transition, transitionEnd);
-
-                self.trigger('end');
-            }
+        cleanup: function(from, to) {
+            var views = from.add(to);
+            views.css('opacity', '');
+            views.css('display', '');
         }
 
     });
