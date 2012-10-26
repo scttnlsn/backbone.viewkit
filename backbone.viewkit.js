@@ -154,7 +154,10 @@
         options || (options = {});
 
         this.initialize(options);
-        _.extend(this.transition, _.pick(options, 'duration', 'easing', 'delay'));
+
+        if (this.transition) {
+            _.extend(this.transition, _.pick(options, 'duration', 'easing', 'delay'));
+        }
     };
 
     var Config = ViewKit.Transition.Config = {
@@ -176,6 +179,13 @@
 
             this.before(from, to);
 
+            if (!this.transition) {
+                this.after(from, to);
+                this.cleanup(from, to);
+                this.trigger('end');
+                return callback();
+            }
+
             var els = from.add(to);
             var transition = [
                 this.transition.property,
@@ -195,13 +205,12 @@
             function transitionEnd() {
                 if (++count !== 2) return;
 
-                callback();
-
                 els.css(Config.transition, '');
                 els.off(Config.transitionEnd, transitionEnd);
                 self.cleanup(from, to);
 
                 self.trigger('end');
+                callback();
             }
         }
 
