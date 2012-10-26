@@ -107,15 +107,22 @@
 
     ViewKit.ViewSelector = ViewKit.ViewPort.extend({
 
-        constructor: function() {
+        constructor: function(options) {
             this._views = [];
             this._index = null;
+
+            options || (options = {});
+            if (options.views) this.setViews(options.views);
 
             ViewKit.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         getView: function() {
             return this._views[this._index];
+        },
+
+        getViews: function() {
+            return this._views;
         },
 
         setViews: function(views) {

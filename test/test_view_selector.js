@@ -4,12 +4,14 @@ describe('ViewSelector', function() {
     var viewSelector, foo, bar;
 
     beforeEach(function() {
-        viewSelector = new Backbone.ViewKit.ViewSelector();
+        foo = new Backbone.TextView({ text: 'foo' }).render();
+        bar = new Backbone.TextView({ text: 'bar' }).render();
 
-        foo = new Backbone.TextView({ text: 'foo' });
-        bar = new Backbone.TextView({ text: 'bar' });
-        foo.render();
-        bar.render();
+        viewSelector = new Backbone.ViewKit.ViewSelector({ views: [foo, bar] });
+    });
+
+    it('manages list of views', function() {
+        assert.deepEqual(viewSelector.getViews(), [foo, bar]);
     });
 
     describe('when setting views', function() {
@@ -24,10 +26,6 @@ describe('ViewSelector', function() {
     });
 
     describe('when selecting view', function() {
-        beforeEach(function() {
-            viewSelector.setViews([foo, bar]);
-        });
-        
         it('throws error when index is out of range', function() {
             assert.throws(function() {
                 viewSelector.selectView(-1);
