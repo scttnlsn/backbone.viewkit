@@ -151,7 +151,10 @@
     // ---------------
 
     ViewKit.Transition = function(options) {
-        this.initialize(options || {});
+        options || (options = {});
+
+        this.initialize(options);
+        _.extend(this.transition, _.pick(options, 'duration', 'easing', 'delay'));
     };
 
     var Config = ViewKit.Transition.Config = {
