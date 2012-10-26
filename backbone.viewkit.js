@@ -137,6 +137,7 @@
             });
 
             this._views = views;
+            this._index = null;
         },
 
         selectView: function(index) {
