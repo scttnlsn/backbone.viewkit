@@ -67,10 +67,13 @@ Views that are managed by the selector will be able to access the selector via `
 
 ### `new Backbone.ViewKit.ViewSelector([options])`
 
-When creating a new view selector, optionally initialize it with an array of views.
+When creating a new view selector, optionally initialize it with an array of views and/or a default transition.
 
 ```javascript
-new Backbone.ViewKit.ViewSelector({ views: [foo, bar, baz] });
+new Backbone.ViewKit.ViewSelector({
+    views: [foo, bar, baz],
+    transition: new Backbone.ViewKit.Transitions.Fade()
+});
 ```
 
 ### `setViews(views)`
