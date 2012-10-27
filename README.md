@@ -57,10 +57,10 @@ A ViewSelector is a ViewPort that manages an ordered set of views which can be s
 ```javascript
 var viewSelector = new Backbone.ViewKit.ViewSelector({ views: [foo, bar, baz] });
 
-viewSelector.selectIndex(0); // renders 'foo'
-viewSelector.selectIndex(1); // renders 'bar'
-viewSelector.selectIndex(2); // renders 'baz'
-viewSelector.selectIndex(3); // throws error
+viewSelector.selectView(0); // renders 'foo'
+viewSelector.selectView(1); // renders 'bar'
+viewSelector.selectView(2); // renders 'baz'
+viewSelector.selectView(3); // throws error
 ```
 
 Views that are managed by the selector will be able to access the selector via `this.viewSelector`.
