@@ -82,6 +82,7 @@
             }
 
             this.render(transition || this.transitions.pop);
+            this.trigger('popped', popped);
 
             return popped;
         },

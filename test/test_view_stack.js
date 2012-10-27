@@ -64,6 +64,14 @@ describe('ViewStack', function() {
             var view = viewStack.popView();
             assert.ok(!view.viewStack);
         });
+
+        it('emits a `popped` event', function(done) {
+            viewStack.on('popped', function(view) {
+                assert.equal(view, bar);
+                done();
+            });
+            viewStack.popView();
+        });
     });
 
     describe('when replacing a view', function() {
