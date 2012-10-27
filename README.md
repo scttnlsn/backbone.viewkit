@@ -86,7 +86,7 @@ viewSelector.setViews([foo, bar, baz]);
 
 ### `selectView(index, [transition])`
 
-Select the view at the given index and render it in the view port.  Optionally specify a transition.  Throws an error if the index is out of bounds.
+Select the view at the given index and render it in the view port.  Optionally specify a transition.  Throws an error if the index is out of bounds.  Emits a `selected` event passing the selected view and the index respectively.
 
 ## Backbone.ViewKit.ViewStack
 
@@ -120,15 +120,15 @@ new Backbone.ViewKit.ViewStack({
 
 ### `pushView(view, [transition])`
 
-Push the given view onto the stack and render it in the view port.  Optionally specify a transition.
+Push the given view onto the stack and render it in the view port.  Optionally specify a transition.  Emits a `pushed` event passing the pushed view.
 
 ### `popView([transition])`
 
-Pop the current view off the top of the stack and render the previous view in the view port.  Returns the popped view.  Optionally specify a transition.
+Pop the current view off the top of the stack and render the previous view in the view port.  Returns the popped view.  Optionally specify a transition.  Emits a `popped` event passing the popped view.
 
 ### `replaceView(view, [transition])`
 
-Replace the current view with the given view.  This effectively pops the stack and pushes the given view as a single operation.  Returns the replaced view.  Optionally specify a transition.  Throws an error if there is no view to replace.
+Replace the current view with the given view.  This effectively pops the stack and pushes the given view as a single operation.  Returns the replaced view.  Optionally specify a transition.  Throws an error if there is no view to replace.  Emits a `popped` event (see above), `pushed` event (see above), and `replaced` event passing the pushed view and the popped view respectively.
 
 ## Backbone.ViewKit.Transition
 
