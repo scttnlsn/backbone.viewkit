@@ -112,6 +112,7 @@
             this._index = null;
 
             options || (options = {});
+            this.transition = options.transition;
             if (options.views) this.setViews(options.views);
 
             ViewKit.ViewPort.prototype.constructor.apply(this, arguments);
@@ -140,13 +141,13 @@
             this._index = null;
         },
 
-        selectView: function(index) {
+        selectView: function(index, transition) {
             if (index >= this._views.length || index < 0) {
                 throw new Error('Index out of bounds');
             }
 
             this._index = index;
-            this.render();
+            this.render(transition || this.transition);
         },
 
         _cleanup: function(view) {
