@@ -121,7 +121,7 @@ Push the given view onto the stack and render it in the view port.  Optionally s
 
 ### `popView([transition])`
 
-Pop the current view off the top of the stack and render the previous view in the view port.  Returns the popped view.  Optionally specify a transition.  Throws an error if there is no view to pop.
+Pop the current view off the top of the stack and render the previous view in the view port.  Returns the popped view.  Optionally specify a transition.
 
 ### `replaceView(view, [transition])`
 
