@@ -71,6 +71,7 @@
 
             this._stack.push(view);
             this.render(transition || this.transitions.push);
+            this.trigger('pushed', view);
         },
 
         popView: function(transition) {

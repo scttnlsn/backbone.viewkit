@@ -12,15 +12,24 @@ describe('ViewStack', function() {
 
         beforeEach(function() {
             foo = new Backbone.TextView({ text: 'foo' });
-            viewStack.pushView(foo.render());
         });
 
         it('shows pushed view', function() {
+            viewStack.pushView(foo.render());
             assert.equal(viewStack.$el.html(), '<div>foo</div>');
         });
 
         it('adds view stack to view', function() {
+            viewStack.pushView(foo.render());
             assert.equal(foo.viewStack, viewStack);
+        });
+
+        it('emits a `pushed` event', function(done) {
+            viewStack.on('pushed', function(view) {
+                assert.equal(view, foo);
+                done();
+            });
+            viewStack.pushView(foo.render());
         });
     });
 
