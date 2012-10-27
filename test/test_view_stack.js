@@ -108,5 +108,33 @@ describe('ViewStack', function() {
                 viewStack.replaceView(bar.render());
             });
         });
+
+        it('emits a `popped` event', function(done) {
+            viewStack.pushView(foo.render());
+            viewStack.on('popped', function(view) {
+                assert.equal(view, foo);
+                done();
+            });
+            viewStack.replaceView(bar.render());
+        });
+
+        it('emits a `pushed` event', function(done) {
+            viewStack.pushView(foo.render());
+            viewStack.on('pushed', function(view) {
+                assert.equal(view, bar);
+                done();
+            });
+            viewStack.replaceView(bar.render());
+        });
+
+        it('emits a `replaced` event', function(done) {
+            viewStack.pushView(foo.render());
+            viewStack.on('replaced', function(pushed, popped) {
+                assert.equal(pushed, bar);
+                assert.equal(popped, foo);
+                done();
+            });
+            viewStack.replaceView(bar.render());
+        });
     });
 });

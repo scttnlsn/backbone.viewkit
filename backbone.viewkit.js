@@ -92,15 +92,21 @@
                 throw new Error('View stack is empty');
             }
 
-            var replaced = this._stack.pop();
+            var popped = this._stack.pop();
 
-            if (replaced) {
-                this._cleanup(replaced);
+            if (popped) {
+                this._cleanup(popped);
             }
 
-            this.pushView(view, transition || this.transitions.replace);
+            view.viewStack = this;
+            this._stack.push(view);
 
-            return replaced;
+            this.render(transition || this.transitions.replace);
+            this.trigger('popped', popped);
+            this.trigger('pushed', view);
+            this.trigger('replaced', view, popped);
+
+            return popped;
         },
 
         _cleanup: function(view) {
