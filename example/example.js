@@ -27,7 +27,7 @@
         template: '#tabs-template',
 
         events: {
-            'click [data-tab]': 'selectTab'
+            'tap [data-tab]': 'selectTab'
         },
 
         selectTab: function(e) {
@@ -44,7 +44,7 @@
         className: 'page',
 
         events: {
-            'click .push': 'push'
+            'tap .push': 'push'
         },
 
         push: function() {
@@ -61,8 +61,8 @@
         className: 'page',
 
         events: {
-            'click .push': 'push',
-            'click .pop': 'pop'
+            'tap .push': 'push',
+            'tap .pop': 'pop'
         },
 
         push: function() {
@@ -83,7 +83,7 @@
         className: 'page',
 
         events: {
-            'click .pop': 'pop'
+            'tap .pop': 'pop'
         },
 
         pop: function() {
