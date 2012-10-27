@@ -48,7 +48,7 @@ Returns the currently "active" view to be rendered in the view port.
 
 ### `render([transition])`
 
-Render the view port, optionally using the given transition.
+Render the view returned from `getView` in the view port, optionally using the given transition.
 
 ## Backbone.ViewKit.ViewSelector
 
@@ -90,17 +90,30 @@ Select the view at the given index and render it in the view port.  Throws an er
 A ViewStack is a ViewPort that manages a stack of views.  New views can be displayed by pushing them on to the stack and one can revert to previously displayed views by popping the stack.
 
 ```javascript
-var stack = new Backbone.ViewKit.ViewStack();
+var viewStack = new Backbone.ViewKit.ViewStack();
 
-stack.pushView(foo); // renders 'foo'
-stack.pushView(bar); // renders 'bar'
-stack.popView(); // renders 'foo'
-stack.pushView(bar); // renders 'bar'
-stack.replaceView(baz); // renders 'baz'
-stack.popView(); // renders 'foo'
+viewStack.pushView(foo); // renders 'foo'
+viewStack.pushView(bar); // renders 'bar'
+viewStack.popView(); // renders 'foo'
+viewStack.pushView(bar); // renders 'bar'
+viewStack.replaceView(baz); // renders 'baz'
+viewStack.popView(); // renders 'foo'
 ```
 
 Views that are pushed onto the stack will be able to access the stack via `this.viewStack`.
+
+### `new Backbone.ViewKit.ViewStack([options])`
+
+When creating a new view stack, optionally specify any default transitions.
+
+```javascript
+new Backbone.ViewKit.ViewStack({
+    transitions: {
+        push: new Backbone.ViewKit.Transitions.Slide(),
+        pop: new Backbone.ViewKit.Transitions.Slide({ reverse: true })
+    }
+});
+```
 
 ### `pushView(view, [transition])`
 
@@ -108,14 +121,37 @@ Push the given view onto the stack and render it in the view port.  Optionally s
 
 ### `popView([transition])`
 
-Pop the current view off the top of the stack and render the previous view in the view port.  Returns the popped view.  Optionally specify a transition.
+Pop the current view off the top of the stack and render the previous view in the view port.  Returns the popped view.  Optionally specify a transition.  Throws an error if there is no view to pop.
 
 ### `replaceView(view, [transition])`
 
-Replace the current view with the given view.  This effectively pops the stack and pushes the given view as a single operation.  Returns the replaced view.  Optionally specify a transition.
+Replace the current view with the given view.  This effectively pops the stack and pushes the given view as a single operation.  Returns the replaced view.  Optionally specify a transition.  Throws an error if there is no view to replace.
 
 ## Backbone.ViewKit.Transition
 
-## Backbone.ViewKit.Transitions.Slide
+A Transition is responsible for handling the change between views returned by a ViewPort's `getView` method using CSS transitions.  There are a number of method "hooks" that can be overridden to implement custom transitions- check out the source of the transitions bundled with Backbone.ViewKit for more details.
 
-## Backbone.ViewKit.Transitions.Fade
+### Backbone.ViewKit.Transitions.Slide
+
+Slide (right to left by default) between views.  Accepts various optional parameters:
+
+```javascript
+new Backbone.ViewKit.Transitions.Slide({
+    reverse: false, // right to left
+    duration: 0.4, // seconds
+    easing: 'ease-out',
+    delay: 0 // seconds
+});
+```
+
+### Backbone.ViewKit.Transitions.Fade
+
+Crossfade between views.  Accepts various optional parameters:
+
+```javascript
+new Backbone.ViewKit.Transitions.Fade({
+    duration: 0.4, // seconds
+    easing: 'ease-out',
+    delay: 0 // seconds
+});
+```
