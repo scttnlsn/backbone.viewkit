@@ -69,5 +69,14 @@ describe('ViewSelector', function() {
             viewSelector.selectView(0);
             assert.equal(viewSelector.$el.html(), '<div>foo</div>');
         });
+
+        it('emits a `selected` event', function(done) {
+            viewSelector.on('selected', function(view, index) {
+                assert.equal(view, bar);
+                assert.equal(index, 1);
+                done();
+            });
+            viewSelector.selectView(1);
+        });
     });
 });

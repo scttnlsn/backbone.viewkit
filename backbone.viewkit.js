@@ -150,6 +150,7 @@
 
             this._index = index;
             this.render(transition || this.transition);
+            this.trigger('selected', this.getView(), index);
         },
 
         _cleanup: function(view) {
