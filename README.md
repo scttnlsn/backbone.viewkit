@@ -13,9 +13,7 @@ A demo (of the included example) is available here: [http://fiddle.jshell.net/sc
 
 ## Backbone.ViewKit.ViewPort
 
-A ViewPort is a Backbone.View responsible for rendering other views inside of it (one at a time) and serves as a base class for other Backbone.ViewKit classes.  To build custom ViewPorts, override the `getView` method and return a Backbone.View.  The returned view will be displayed inside the ViewPort when the ViewPort is rendered.  ViewPorts can also optionally transition between views (see Transition).
-
-### Example
+A ViewPort is a Backbone.View responsible for rendering other views inside of it (one at a time) and serves as a base class for other Backbone.ViewKit classes.  To build custom ViewPorts, override the `getView` method and return a Backbone.View.  The returned view will be displayed inside the ViewPort when the ViewPort is rendered.  ViewPorts can also optionally transition between views (see [Backbone.ViewKit.Transition](https://github.com/scttnlsn/backbone.viewkit#backboneviewkittransition)).
 
 ```javascript
 var foo = new Backbone.View({ el: $('<div>foo</div>') });
@@ -43,6 +41,14 @@ cycle.render(); // renders 'bar'
 cycle.render(); // renders 'baz'
 cycle.render(); // renders 'foo'
 ```
+
+### `getView()`
+
+Returns the currently "active" view to be rendered in the view port.
+
+### `render([transition])`
+
+Render the view port, optionally using the given transition.
 
 ## Backbone.ViewKit.ViewSelector
 
