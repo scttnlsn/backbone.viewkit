@@ -62,5 +62,12 @@ describe('ViewSelector', function() {
         it('adds view selector to view', function() {
             assert.equal(foo.viewSelector, viewSelector);
         });
+
+        it('can be selected multiple times', function() {
+            viewSelector.selectView(0);
+            assert.equal(viewSelector.$el.html(), '<div>foo</div>');
+            viewSelector.selectView(0);
+            assert.equal(viewSelector.$el.html(), '<div>foo</div>');
+        });
     });
 });

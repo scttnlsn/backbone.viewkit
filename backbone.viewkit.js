@@ -15,6 +15,8 @@
             var view = this.getView();
             var current = this._current;
 
+            if (view === current) return this;
+
             if (view) {
                 this.$el.append(view.$el);
 
