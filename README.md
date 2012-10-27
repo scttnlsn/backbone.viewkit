@@ -81,9 +81,9 @@ Set the views that the selector will manage.  This replaces all existing views w
 viewSelector.setViews([foo, bar, baz]);
 ```
 
-### `selectView(index)`
+### `selectView(index, [transition])`
 
-Select the view at the given index and render it in the view port.  Throws an error if the index is out of bounds.
+Select the view at the given index and render it in the view port.  Optionally specify a transition.  Throws an error if the index is out of bounds.
 
 ## Backbone.ViewKit.ViewStack
 
