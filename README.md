@@ -3,7 +3,7 @@ Backbone.ViewKit
 
 Backbone.ViewKit is a Backbone plugin for managing views and view transitions, geared primarily toward mobile applications.
 
-**Note**: This is very much still an experiment/work in progress.  It has only been tested in Chrome and Safari (desktop and iOS).
+**Note**: This is very much still an experiment/work in progress.  It has only been developed/tested in Chrome and Safari (desktop and iOS) at this point.
 
 ## Demo
 
