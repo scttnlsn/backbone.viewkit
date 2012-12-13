@@ -17,36 +17,31 @@
 
             if (view === current) return this;
 
+            var detach = function() {
+                if (current) {
+                    current.$el.detach();
+                }
+            };
+
             if (view) {
                 this.$el.append(view.$el);
 
                 if (current && transition) {
                     transition.run(current.$el, view.$el, function() {
-                        current.remove();
+                        detach();
                     });
                 } else {
-                    if (current) current.remove();
+                    detach();
                 }
-
-                view.delegateEvents();
 
                 this._current = view;
             } else {
-                if (current) current.remove();
+                detach();
                 this._current = null;
                 this.$el.empty();
             }
 
             return this;
-        },
-
-        delegateEvents: function() {
-            Backbone.View.prototype.delegateEvents.apply(this, arguments);
-
-            var view = this.getView();
-            if (view) {
-                view.delegateEvents();
-            }
         }
 
     });
@@ -75,13 +70,29 @@
         },
 
         popView: function(transition) {
+            transition || (transition = this.transitions.pop);
+
+            var self = this;
             var popped = this._stack.pop();
 
-            if (popped) {
-                this._cleanup(popped);
+            var done = function() {
+                if (popped) {
+                    self._cleanup(popped);
+                    popped.remove();
+                }
+
+                if (transition) {
+                    transition.off('end', done);
+                }
+            };
+
+            if (transition) {
+                transition.on('end', done);
+            } else {
+                done();
             }
 
-            this.render(transition || this.transitions.pop);
+            this.render(transition);
             this.trigger('popped', popped);
 
             return popped;
