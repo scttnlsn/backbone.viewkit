@@ -66,6 +66,7 @@
 
             this._stack.push(view);
             this.render(transition || this.transitions.push);
+            view.render();
             this.trigger('pushed', view);
         },
 
@@ -113,6 +114,7 @@
             this._stack.push(view);
 
             this.render(transition || this.transitions.replace);
+            view.render();
             this.trigger('popped', popped);
             this.trigger('pushed', view);
             this.trigger('replaced', view, popped);

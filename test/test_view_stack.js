@@ -15,12 +15,12 @@ describe('ViewStack', function() {
         });
 
         it('shows pushed view', function() {
-            viewStack.pushView(foo.render());
+            viewStack.pushView(foo);
             assert.equal(viewStack.$el.html(), '<div>foo</div>');
         });
 
         it('adds view stack to view', function() {
-            viewStack.pushView(foo.render());
+            viewStack.pushView(foo);
             assert.equal(foo.viewStack, viewStack);
         });
 
@@ -29,7 +29,7 @@ describe('ViewStack', function() {
                 assert.equal(view, foo);
                 done();
             });
-            viewStack.pushView(foo.render());
+            viewStack.pushView(foo);
         });
     });
 
@@ -40,8 +40,8 @@ describe('ViewStack', function() {
             foo = new Backbone.TextView({ text: 'foo' });
             bar = new Backbone.TextView({ text: 'bar' });
 
-            viewStack.pushView(foo.render());
-            viewStack.pushView(bar.render());
+            viewStack.pushView(foo);
+            viewStack.pushView(bar);
         });
 
         it('shows previous view', function() {
@@ -83,58 +83,58 @@ describe('ViewStack', function() {
         });
 
         it('shows replaced view', function() {
-            viewStack.pushView(foo.render());
-            viewStack.replaceView(bar.render());
+            viewStack.pushView(foo);
+            viewStack.replaceView(bar);
 
             assert.equal(viewStack.$el.html(), '<div>bar</div>');
         });
 
         it('removes previous view from stack', function() {
-            viewStack.pushView(foo.render());
-            viewStack.replaceView(bar.render());
+            viewStack.pushView(foo);
+            viewStack.replaceView(bar);
             viewStack.popView();
 
             assert.equal(viewStack.$el.html(), '');
         });
 
         it('removes view stack from view', function() {
-            viewStack.pushView(foo.render());
-            var view = viewStack.replaceView(bar.render());
+            viewStack.pushView(foo);
+            var view = viewStack.replaceView(bar);
             assert.ok(!view.viewStack);
         });
 
         it('throws error if stack is empty', function() {
             assert.throws(function() {
-                viewStack.replaceView(bar.render());
+                viewStack.replaceView(bar);
             });
         });
 
         it('emits a `popped` event', function(done) {
-            viewStack.pushView(foo.render());
+            viewStack.pushView(foo);
             viewStack.on('popped', function(view) {
                 assert.equal(view, foo);
                 done();
             });
-            viewStack.replaceView(bar.render());
+            viewStack.replaceView(bar);
         });
 
         it('emits a `pushed` event', function(done) {
-            viewStack.pushView(foo.render());
+            viewStack.pushView(foo);
             viewStack.on('pushed', function(view) {
                 assert.equal(view, bar);
                 done();
             });
-            viewStack.replaceView(bar.render());
+            viewStack.replaceView(bar);
         });
 
         it('emits a `replaced` event', function(done) {
-            viewStack.pushView(foo.render());
+            viewStack.pushView(foo);
             viewStack.on('replaced', function(pushed, popped) {
                 assert.equal(pushed, bar);
                 assert.equal(popped, foo);
                 done();
             });
-            viewStack.replaceView(bar.render());
+            viewStack.replaceView(bar);
         });
     });
 });
