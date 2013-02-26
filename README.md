@@ -48,7 +48,8 @@ Returns the currently "active" view to be rendered in the view port.
 
 ### `render([transition])`
 
-Render the view returned from `getView` in the view port, optionally using the given transition.
+Render the view returned from `getView` in the view port, optionally using the given transition.  Emits an `inview` event on
+the view entering the viewport and an `outview` on the view exiting the viewport.
 
 ## Backbone.ViewKit.ViewSelector
 

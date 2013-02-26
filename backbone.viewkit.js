@@ -23,6 +23,8 @@
                 }
             };
 
+            if (this._current) this._current.trigger('outview', this);
+
             if (view) {
                 this.$el.append(view.$el);
 
@@ -35,6 +37,7 @@
                 }
 
                 this._current = view;
+                this._current.trigger('inview', this);
             } else {
                 detach();
                 this._current = null;
