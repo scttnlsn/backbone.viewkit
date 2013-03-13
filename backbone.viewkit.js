@@ -282,7 +282,7 @@
             var delta = this.reverse ? width : -width;
             var els = from.add(to);
 
-            els.css(Config.transform, 'translateX(' + delta + 'px)');
+            els.css(Config.transform, 'translate3d(' + delta + 'px, 0, 0)');
         },
 
         cleanup: function(from, to) {
