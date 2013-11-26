@@ -1,5 +1,23 @@
-(function() {
+(function(window, factory) {
+    'use strict';
+    var Backbone = window.Backbone;
 
+    // AMD. Register as an anonymous module.  Wrap in function so we have access
+    // to root via `this`.
+    if (typeof define === 'function' && define.amd) {
+        return define(['backbone', 'underscore'], function() {
+            return factory.apply(window, arguments);
+        });
+    }
+
+    // NodeJS. Calling with required packages
+    if (typeof module === 'object' && module.exports) {
+        factory.call(window, require('backbone'), require('underscore'));
+    }
+
+    // Browser globals.
+    factory.call(window, Backbone, window._);
+}(typeof global === "object" ? global : this, function (Backbone, _) {
     var ViewKit = Backbone.ViewKit = {};
 
     // Views
@@ -348,4 +366,5 @@
         };
     }
 
-})();
+    return ViewKit;
+}));

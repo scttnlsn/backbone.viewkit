@@ -9,9 +9,11 @@
         "email": "scott@scttnlsn.com",
         "web": "http://scttnlsn.com"
     },
-    
+
     "repository": {
         "type": "git",
         "url": "git://github.com/scttnlsn/backbone.viewkit.git"
-    }
+    },
+
+    "main": "backbone.viewkit.js"
 }
