@@ -127,6 +127,7 @@
 
             if (popped) {
                 this._cleanup(popped);
+                popped.remove();
             }
 
             view.viewStack = this;
