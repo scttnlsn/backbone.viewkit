@@ -9,8 +9,6 @@ Backbone.ViewKit is a Backbone plugin for managing views and view transitions, g
 
 A demo (of the included example) is available here: [http://fiddle.jshell.net/scttnlsn/xQxRY/show/](http://fiddle.jshell.net/scttnlsn/xQxRY/show/).  You can view/edit the code here: [http://jsfiddle.net/scttnlsn/xQxRY/](http://jsfiddle.net/scttnlsn/xQxRY/).
 
-![QR Code](http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=http://fiddle.jshell.net/scttnlsn/xQxRY/show/)
-
 ## Backbone.ViewKit.ViewPort
 
 A ViewPort is a Backbone.View responsible for rendering other views inside of it (one at a time) and serves as a base class for other Backbone.ViewKit classes.  To build custom ViewPorts, override the `getView` method and return a Backbone.View.  The returned view will be displayed inside the ViewPort when the ViewPort is rendered.  ViewPorts can also optionally transition between views (see [Backbone.ViewKit.Transition](https://github.com/scttnlsn/backbone.viewkit#backboneviewkittransition)).
